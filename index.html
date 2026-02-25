@@ -62,7 +62,7 @@ h1 {
     width: 44px;
     height: 44px;
     border-radius: 12px;
-    background: linear-gradient(135deg, #30D158, #34C759);
+    background: linear-gradient(135deg, #007AFF, #0A84FF);
     color: #FFFFFF;
     font-size: 22px;
     font-weight: 700;
@@ -140,7 +140,7 @@ h1 {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #30D158, #34C759);
+    background: linear-gradient(135deg, #007AFF, #0A84FF);
     color: #FFFFFF;
     box-shadow: 0 2px 12px rgba(48,209,88,0.3);
 }
@@ -158,7 +158,7 @@ h1 {
 
 .btn-link {
     background: none;
-    color: #30D158;
+    color: #007AFF;
     font-size: 15px;
     font-weight: 400;
     text-decoration: none;
@@ -218,7 +218,7 @@ h1 {
 .pulse-dot {
     width: 8px;
     height: 8px;
-    background: #30D158;
+    background: #007AFF;
     border-radius: 50%;
     animation: pulse 1.5s ease-in-out infinite;
 }
@@ -257,7 +257,7 @@ h1 {
 .tier-rep .big-number {
     font-size: 64px;
     font-weight: 700;
-    color: #30D158;
+    color: #007AFF;
     line-height: 1;
     letter-spacing: -1px;
 }
@@ -319,7 +319,7 @@ h1 {
     padding: 16px;
     border-left: 3px solid #D1D1D6;
 }
-.quality-card.status-green { border-left-color: #30D158; }
+.quality-card.status-green { border-left-color: #007AFF; }
 .quality-card.status-yellow { border-left-color: #FF9F0A; }
 .quality-card.status-red { border-left-color: #FF453A; }
 
@@ -362,7 +362,7 @@ h1 {
 }
 
 /* Color helpers */
-.text-green { color: #30D158; }
+.text-green { color: #007AFF; }
 .text-yellow { color: #FF9F0A; }
 .text-red { color: #FF453A; }
 
@@ -402,7 +402,7 @@ h1 {
 }
 .setup-card input:focus,
 .setup-card select:focus {
-    border-color: #30D158;
+    border-color: #007AFF;
 }
 .setup-card input::placeholder {
     color: rgba(0,0,0,0.25);
@@ -550,7 +550,7 @@ h1 {
 .btn-back-nav {
     background: none;
     border: none;
-    color: #30D158;
+    color: #007AFF;
     font-family: inherit;
     font-size: 17px;
     cursor: pointer;
@@ -589,7 +589,7 @@ h1 {
     width: 36px;
     height: 36px;
     border: 3px solid #E5E5EA;
-    border-top: 3px solid #30D158;
+    border-top: 3px solid #007AFF;
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
 }
@@ -613,7 +613,7 @@ h1 {
 .get-ready-overlay .countdown-number {
     font-size: 120px;
     font-weight: 200;
-    color: #30D158;
+    color: #007AFF;
     line-height: 1;
     font-variant-numeric: tabular-nums;
 }
@@ -1102,7 +1102,7 @@ function drawLiveGraph() {
     if (samples.length < 2) return;
 
     ctx.beginPath();
-    ctx.strokeStyle = '#30D158';
+    ctx.strokeStyle = '#007AFF';
     ctx.lineWidth = 1.5;
 
     const xStep = plotW / GRAPH_SAMPLES;
@@ -1151,7 +1151,7 @@ function drawLiveGraph() {
     // Current value text
     if (samples.length > 0) {
         const current = samples[samples.length - 1];
-        ctx.fillStyle = current >= PEAK_THRESHOLD ? '#FF9F0A' : '#30D158';
+        ctx.fillStyle = current >= PEAK_THRESHOLD ? '#FF9F0A' : '#007AFF';
         ctx.font = 'bold 14px -apple-system, sans-serif';
         ctx.textAlign = 'right';
         ctx.fillText(current.toFixed(2) + 'g', padLeft + plotW, padTop + 14);
@@ -1502,7 +1502,7 @@ function stopTest() {
 // =============================================================
 function createBarChart(values, options = {}) {
     const {
-        width = 140, height = 60, color = '#30D158',
+        width = 140, height = 60, color = '#007AFF',
         showTrend = false, trendSlope = 0, trendIntercept = 0
     } = options;
     if (!values || values.length === 0) return '';
@@ -1644,7 +1644,7 @@ function renderResults(session, savedDate) {
 }
 
 function statusColor(flag) {
-    if (flag === 'high' || flag === 'strong') return '#30D158';
+    if (flag === 'high' || flag === 'strong') return '#007AFF';
     if (flag === 'intermediate' || flag === 'moderate') return '#FF9F0A';
     return '#FF453A';
 }
@@ -1807,11 +1807,11 @@ function renderTrendChart(sessions) {
 
     if (points.length > 1) {
         const pathD = points.map((p, i) => (i === 0 ? `M${p.x},${p.y}` : `L${p.x},${p.y}`)).join(' ');
-        svgContent += `<path d="${pathD}" fill="none" stroke="#30D158" stroke-width="2"/>`;
+        svgContent += `<path d="${pathD}" fill="none" stroke="#007AFF" stroke-width="2"/>`;
     }
 
     points.forEach((p, i) => {
-        svgContent += `<circle cx="${p.x}" cy="${p.y}" r="4" fill="#30D158"/>`;
+        svgContent += `<circle cx="${p.x}" cy="${p.y}" r="4" fill="#007AFF"/>`;
         svgContent += `<text x="${p.x}" y="${p.y - 8}" text-anchor="middle" font-size="11" fill="#1C1C1E">${typeof values[i] === 'number' ? (Number.isInteger(values[i]) ? values[i] : values[i].toFixed(2)) : values[i]}</text>`;
         svgContent += `<text x="${p.x}" y="${pad + plotH + 14}" text-anchor="middle" font-size="10" fill="rgba(0,0,0,0.4)">${labels[i]}</text>`;
     });
