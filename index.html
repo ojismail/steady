@@ -642,7 +642,7 @@ h1 {
     <!-- Screen: Setup (first visit only) -->
     <div id="screen-setup" class="screen">
         <div style="text-align:center; margin-bottom:20px;">
-            <p style="font-size:17px; color:rgba(0,0,0,0.5);">Let's set up your profile to personalize your results.</p>
+            <p style="font-size:17px; color:rgba(0,0,0,0.5);">Set up a patient profile to personalize results.</p>
         </div>
         <div class="setup-card">
             <label>Height <span style="color:#FF453A;">*</span></label>
@@ -686,8 +686,8 @@ h1 {
     <div id="screen-pretest" class="screen">
         <div class="instructions">
             <strong>How It Works</strong><br>
-            Step 1: Tap Start Test and tuck your phone into your waistband.<br>
-            Step 2: Stand up and sit down as many times as you can in 30 seconds.
+            Step 1: Tuck the phone into the patient's waistband and tap Start.<br>
+            Step 2: Have the patient stand up and sit down as many times as they can in 30 seconds.
         </div>
         <button class="btn btn-primary" id="btn-start">Start Test</button>
         <button class="btn btn-link" id="btn-dashboard">View Dashboard</button>
@@ -729,7 +729,7 @@ h1 {
             <div class="power-info">
                 <div class="power-label">Relative Muscle Power</div>
                 <div class="power-status" id="result-power-status"></div>
-                <div class="power-note">Estimated from your height and movement speed</div>
+                <div class="power-note">Estimated from patient height and rep cadence</div>
             </div>
         </div>
 
@@ -783,11 +783,11 @@ h1 {
             <button class="active" data-metric="rep_count">Reps</button>
             <button data-metric="power_wkg">Power</button>
             <button data-metric="mean_peak_accel">Force</button>
-            <button data-metric="cv_accel">Consistency</button>
+            <button data-metric="cv_accel">CV</button>
             <button data-metric="fatigue_slope">Fatigue</button>
         </div>
         <div class="chart-container" id="trend-chart-container">
-            <div class="chart-msg">Complete your first test to start tracking trends.</div>
+            <div class="chart-msg">Complete the first test to start tracking trends.</div>
         </div>
 
         <div class="trend-alerts" id="trend-alerts"></div>
@@ -1547,7 +1547,7 @@ function renderResults(session, savedDate) {
         document.getElementById('result-reps').textContent = '0';
         document.getElementById('result-norm').innerHTML =
             '<strong>No movements detected</strong><br>' +
-            'Make sure your phone is secured at waist level and you stand up fully from the chair.';
+            'Make sure the phone is secured at waist level and the patient stands up fully from the chair.';
         document.getElementById('result-power').textContent = '\u2014';
         document.getElementById('result-power-status').textContent = '';
         ['accel', 'gyro', 'cv', 'fatigue'].forEach(id => {
@@ -1771,7 +1771,7 @@ function getThresholdForMetric(metric) {
 function renderTrendChart(sessions) {
     const container = document.getElementById('trend-chart-container');
     if (sessions.length === 0) {
-        container.innerHTML = '<div class="chart-msg">Complete your first test to start tracking trends.</div>';
+        container.innerHTML = '<div class="chart-msg">Complete the first test to start tracking trends.</div>';
         return;
     }
 
@@ -1837,16 +1837,16 @@ function renderTrendAlerts(sessions) {
     const alerts = [];
 
     const fs = last3.map(s => s.fatigue_slope);
-    if (fs[0] < fs[1] && fs[1] < fs[2]) alerts.push('Fatigue slope has increased over your last 3 sessions.');
+    if (fs[0] < fs[1] && fs[1] < fs[2]) alerts.push('Fatigue slope has increased over the last 3 sessions.');
 
     const cv = last3.map(s => s.cv_accel);
     if (cv[0] > cv[1] && cv[1] > cv[2]) alerts.push('Consistency has decreased — reps are becoming more variable.');
 
     const pw = last3.map(s => s.power_wkg);
-    if (pw[0] < pw[1] && pw[1] < pw[2]) alerts.push('Power output has decreased over your last 3 sessions.');
+    if (pw[0] < pw[1] && pw[1] < pw[2]) alerts.push('Power output has decreased over the last 3 sessions.');
 
     const rc = last3.map(s => s.rep_count);
-    if (rc[0] < rc[1] && rc[1] < rc[2]) alerts.push('Rep count has declined over your last 3 sessions.');
+    if (rc[0] < rc[1] && rc[1] < rc[2]) alerts.push('Rep count has declined over the last 3 sessions.');
 
     alerts.forEach(msg => {
         container.innerHTML += `<div class="trend-alert">${msg}</div>`;
@@ -1856,7 +1856,7 @@ function renderTrendAlerts(sessions) {
 function renderSessionList(sessions) {
     const listContainer = document.getElementById('session-list-items');
     if (sessions.length === 0) {
-        listContainer.innerHTML = '<div class="empty-dashboard">Complete your first test to start building your history.</div>';
+        listContainer.innerHTML = '<div class="empty-dashboard">Complete the first test to start building history.</div>';
         return;
     }
 
