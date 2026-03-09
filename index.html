@@ -686,7 +686,7 @@ h1 {
     <div id="screen-pretest" class="screen">
         <div class="instructions">
             <strong>How It Works</strong><br>
-            Place your phone in your waistband at the front hip. Sit in a standard chair with your arms crossed over your chest. When you're ready, tap Start and stand up and sit down as many times as you can in 30 seconds.
+            Tuck your phone into your waistband at the front of your hip and tap Start. You'll have 5 seconds to sit down and prepare for the test. Then stand up and sit down as many times as you can in 30 seconds.
         </div>
         <button class="btn btn-primary" id="btn-start">Start Test</button>
         <button class="btn btn-link" id="btn-dashboard">View Dashboard</button>
@@ -697,7 +697,7 @@ h1 {
     <div id="screen-test" class="screen">
         <div class="sensor-indicator">
             <div class="pulse-dot"></div>
-            <span id="sensor-status">Recording</span>
+            <span id="sensor-status">Test in progress</span>
         </div>
         <div class="timer-display" id="timer">30</div>
         <div class="live-graph-container">
@@ -728,23 +728,23 @@ h1 {
             <div class="power-info">
                 <div class="power-label">Relative Muscle Power</div>
                 <div class="power-status" id="result-power-status"></div>
-                <div class="power-note">Estimated from your height and rep cadence</div>
+                <div class="power-note">Estimated from your height and movement speed</div>
             </div>
         </div>
 
         <!-- Tier 3: Quality Cards -->
         <div class="quality-grid">
             <div class="quality-card" id="card-accel">
-                <div class="card-title">Push-off Force</div>
-                <div class="card-dimension">Strength</div>
+                <div class="card-title">Strength</div>
+                <div class="card-dimension">How much force you generate standing up</div>
                 <div class="mini-chart" id="chart-accel"></div>
                 <div class="card-status" id="status-accel"></div>
                 <div class="card-detail" id="detail-accel"></div>
             </div>
 
             <div class="quality-card" id="card-gyro">
-                <div class="card-title">Rotational Speed</div>
-                <div class="card-dimension">Mobility</div>
+                <div class="card-title">Mobility</div>
+                <div class="card-dimension">How smoothly you move between sitting and standing</div>
                 <div class="mini-chart" id="chart-gyro"></div>
                 <div class="card-status" id="status-gyro"></div>
                 <div class="card-detail" id="detail-gyro"></div>
@@ -781,8 +781,8 @@ h1 {
         <div class="metric-tabs" id="metric-tabs">
             <button class="active" data-metric="rep_count">Reps</button>
             <button data-metric="power_wkg">Power</button>
-            <button data-metric="mean_peak_accel">Accel</button>
-            <button data-metric="cv_accel">CV</button>
+            <button data-metric="mean_peak_accel">Force</button>
+            <button data-metric="cv_accel">Consistency</button>
             <button data-metric="fatigue_slope">Fatigue</button>
         </div>
         <div class="chart-container" id="trend-chart-container">
@@ -1250,7 +1250,7 @@ async function startRealSensors(permissionGranted) {
         }
     }
 
-    sensorStatus.textContent = 'Recording';
+    sensorStatus.textContent = 'Test in progress';
     showScreen(screenTest);
     startTimer();
     startGraphUpdates();
@@ -1568,7 +1568,7 @@ function renderResults(session, savedDate) {
     if (normRange) {
         const sexLabel = profileForNorm.sex === 'female' ? 'Women' : 'Men';
         document.getElementById('result-norm').textContent =
-            `Typical for ${sexLabel} aged ${profileForNorm.age_group}: ${normRange[0]}\u2013${normRange[1]} reps`;
+            `Typical range for ${sexLabel} aged ${profileForNorm.age_group}: ${normRange[0]}\u2013${normRange[1]} reps`;
     } else {
         document.getElementById('result-norm').textContent =
             'Add age and sex in Settings for a personalized comparison';
@@ -1614,7 +1614,8 @@ function renderResults(session, savedDate) {
     const cvCard = document.getElementById('card-cv');
     const cvFlag = session.flags.exhaustion_cv;
     cvCard.className = 'quality-card status-' + statusClass(cvFlag === 'stable' ? 'high' : cvFlag === 'moderate' ? 'intermediate' : 'low');
-    document.getElementById('status-cv').textContent = `CV = ${session.cvAccel.toFixed(2)}`;
+    const cvPercent = Math.min(100, Math.max(0, Math.round((1 - session.cvAccel) * 100)));
+    document.getElementById('status-cv').textContent = `Consistency score: ${cvPercent}%`;
     document.getElementById('status-cv').className = 'card-status ' +
         (cvFlag === 'stable' ? 'text-green' : cvFlag === 'moderate' ? 'text-yellow' : 'text-red');
     const cvDetailText = cvFlag === 'stable' ? 'Consistent reps throughout' :
@@ -1751,7 +1752,7 @@ function getMetricLabel(metric) {
         case 'power_wkg': return 'W/kg';
         case 'mean_peak_accel': return 'm/s\u00B2';
         case 'cv_accel': return 'CV';
-        case 'fatigue_slope': return 'slope';
+        case 'fatigue_slope': return 'trend';
         default: return '';
     }
 }
@@ -1866,7 +1867,7 @@ function renderSessionList(sessions) {
         const flagCount = Object.values(s.flags).filter(f =>
             f === 'low' || f === 'below_range' || f === 'high' || f === 'significant_decline'
         ).length;
-        const flagText = flagCount > 0 ? `${flagCount} flag${flagCount > 1 ? 's' : ''}` : '';
+        const flagText = flagCount > 0 ? `${flagCount} irregular rep${flagCount > 1 ? 's' : ''}` : '';
 
         return `<div class="session-item" data-session-id="${s.id}">
                 <div class="session-info" onclick="viewSession('${s.id}')">
