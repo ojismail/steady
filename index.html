@@ -44,7 +44,7 @@ h1 {
     width: 100%;
     max-width: 428px;
     padding: 20px;
-    padding-top: env(safe-area-inset-top, 20px);
+    padding-top: calc(env(safe-area-inset-top, 20px) + 24px);
 }
 
 /* --- App Header --- */
@@ -102,7 +102,8 @@ h1 {
     font-size: 15px;
     color: rgba(0,0,0,0.7);
     line-height: 1.53;
-    margin-bottom: 20px;
+    margin-top: 32px;
+    margin-bottom: 32px;
     padding: 20px;
     background: #F2F2F7;
     border-radius: 16px;
@@ -115,6 +116,27 @@ h1 {
     color: rgba(0,0,0,0.4);
     text-transform: uppercase;
     letter-spacing: 0.5px;
+}
+
+.step {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-top: 14px;
+}
+
+.step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    background: #007AFF;
+    color: #fff;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 600;
 }
 
 /* --- Buttons --- */
@@ -685,9 +707,15 @@ h1 {
     <!-- Screen: Pre-Test -->
     <div id="screen-pretest" class="screen">
         <div class="instructions">
-            <strong>How It Works</strong><br>
-            Step 1: Tuck the phone into the patient's waistband and tap Start.<br>
-            Step 2: Have the patient stand up and sit down as many times as they can in 30 seconds.
+            <strong>How It Works</strong>
+            <div class="step">
+                <span class="step-num">1</span>
+                <span>Tuck the phone into the patient's waistband and tap Start.</span>
+            </div>
+            <div class="step">
+                <span class="step-num">2</span>
+                <span>Have the patient stand up and sit down as many times as they can in 30 seconds.</span>
+            </div>
         </div>
         <button class="btn btn-primary" id="btn-start">Start</button>
         <button class="btn btn-link" id="btn-dashboard">View Dashboard</button>
@@ -737,7 +765,7 @@ h1 {
         <div class="quality-grid">
             <div class="quality-card" id="card-accel">
                 <div class="card-title">Strength</div>
-                <div class="card-dimension">How much force is generated when standing up</div>
+                <div class="card-dimension">Force generated when standing up</div>
                 <div class="mini-chart" id="chart-accel"></div>
                 <div class="card-status" id="status-accel"></div>
                 <div class="card-detail" id="detail-accel"></div>
